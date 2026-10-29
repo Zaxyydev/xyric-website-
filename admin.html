@@ -63,7 +63,7 @@ input[type=file]::file-selector-button{background:var(--ac);color:#fff;border:0;
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const DEF={name:'Ogegaugaw',mA:'',mT:'',avatar:'',video:'',audio:'',tabs:[{id:'main',n:'Main'}],cards:[],soc:['#','#','#','#']};
+const DEF={name:'Ogegaugaw',mA:'',mT:'',avatar:'',musicCover:'',video:'',audio:'',tabs:[{id:'main',n:'Main'}],cards:[],soc:['#','#','#','#']};
 let S=DEF,openC=-1,dirty=false;
 async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
 const FBc=window.FB||{},DB=(FBc.databaseURL||'').replace(/\/$/,''),useFB=!!(FBc.apiKey&&DB);
@@ -94,7 +94,7 @@ function form(){
  F=(k,l)=>'<label>'+l+'</label><input type="file" accept="image/*" data-up="'+k+'">',
  sec=(t,b,o)=>'<details class="sec"'+(o?' open':'')+'><summary>'+t+'</summary><div class="in">'+b+'</div></details>';
  let f=sec('&#128100; Profil',I('name','Nama',S.name)+F('avatar','Foto profil')+thumb(S.avatar),1);
- f+=sec('&#127925; Musik &amp; Video',I('mA','Artis',S.mA)+I('mT','Judul lagu',S.mT)+I('audio','File musik',S.audio,'Isi nama file, mis. <b>musik.mp3</b>. Upload file itu ke hosting, satu folder dengan index.html.')+I('video','File video latar',S.video,'Mis. <b>video.mp4</b> (upload ke folder yang sama).'));
+ f+=sec('&#127925; Musik &amp; Video',I('mA','Artis',S.mA)+I('mT','Judul lagu',S.mT)+F('musicCover','Foto cover musik')+thumb(S.musicCover)+I('audio','URL / nama file MP3',S.audio,'Masukkan URL MP3 publik atau nama file yang sudah di-upload ke hosting.')+I('video','File video latar',S.video,'Mis. <b>video.mp4</b> (upload ke folder yang sama).'));
  f+=sec('&#128193; Kategori',S.tabs.map((t,i)=>'<div class="row"><input type="text" data-p="tabs.'+i+'.n" value="'+esc(t.n)+'">'+(i?'<button class="dl" data-del="t'+i+'">Hapus</button>':'')+'</div>').join('')+'<div class="row"><input type="text" id="nt" placeholder="Nama kategori baru"><button class="dl" style="background:var(--ac);color:#fff;border:0" id="at">Tambah</button></div>');
  f+=sec('&#128279; Kartu link ('+S.cards.length+')',S.cards.map((c,i)=>'<details class="cd"'+(i===openC?' open':'')+'><summary>'+esc(c.t||'(tanpa judul)')+' <small>'+esc(tn(c.tab))+'</small></summary><div class="in"><label>Kategori</label><select data-p="cards.'+i+'.tab">'+S.tabs.map(t=>'<option value="'+esc(t.id)+'"'+(t.id===c.tab?' selected':'')+'>'+esc(t.n)+'</option>').join('')+'</select>'+I('cards.'+i+'.t','Judul',c.t)+I('cards.'+i+'.s','Deskripsi',c.s)+I('cards.'+i+'.u','Link',c.u)+F('card'+i,'Gambar')+thumb(c.img)+'<button class="dl" style="margin-top:12px" data-del="c'+i+'">Hapus kartu</button></div></details>').join('')+'<button class="add" id="ac">+ Tambah kartu</button>',1);
  f+=sec('&#127760; Sosial media',['TikTok','Instagram','Facebook','Discord'].map((n,i)=>I('soc.'+i,n,S.soc[i]||'#')).join(''));
@@ -107,7 +107,7 @@ $('#fm').addEventListener('click',e=>{const t=e.target;
  else if(t.dataset.del){const k=t.dataset.del,i=+k.slice(1);if(k[0]==='t'){const id=S.tabs[i].id;S.tabs.splice(i,1);S.cards=S.cards.filter(c=>c.tab!==id)}else S.cards.splice(i,1);openC=-1;changed();form()}});
 $('#fm').addEventListener('change',e=>{const k=e.target.dataset.up,f=e.target.files&&e.target.files[0];if(!k||!f)return;
  const i=new Image();i.onload=()=>{const m=k==='avatar'?300:600,r=Math.min(1,m/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*r);c.height=Math.round(i.height*r);c.getContext('2d').drawImage(i,0,0,c.width,c.height);
-  const d=c.toDataURL('image/jpeg',.82);if(k==='avatar')S.avatar=d;else S.cards[+k.slice(4)].img=d;changed();form()};i.src=URL.createObjectURL(f)});
+  const d=c.toDataURL('image/jpeg',.82);if(k==='avatar')S.avatar=d;else if(k==='musicCover')S.musicCover=d;else S.cards[+k.slice(4)].img=d;changed();form()};i.src=URL.createObjectURL(f)});
 $('#dlj').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:'application/json'}));a.download='data.json';a.click();$('#st').textContent='✓ Cadangan data.json terunduh.'};
 $('#imp').onclick=()=>$('#impf').click();
 $('#impf').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{S=Object.assign({},DEF,JSON.parse(await f.text()));changed();form()}catch(x){$('#st').textContent='File JSON tidak valid'}};
