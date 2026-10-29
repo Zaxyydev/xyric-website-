@@ -50,5 +50,9 @@
     "cover": "",
     "audio": "",
     "autoplay": false
+  },
+  "background": {
+    "type": "gradient",
+    "src": ""
   }
 }
