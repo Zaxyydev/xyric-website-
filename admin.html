@@ -57,22 +57,32 @@ input[type=file]::file-selector-button{background:var(--ac);color:#fff;border:0;
 
 <div id="app"><header><b>&#9881; Admin</b><div class="seg"><button class="on" data-v="ed">Editor</button><button data-v="pv">Preview</button></div><button class="ib" id="out">Keluar</button></header>
 <div class="wrap"><div class="ed" id="fm"></div><div class="pv"><div class="fr"><iframe id="pf" src="index.html" title="preview"></iframe></div></div></div>
-<div class="bar"><div id="st"></div><div class="r"><button class="btn grad" id="dlj">&#11015; Download data.json</button><button class="btn ghost" id="imp">Impor</button></div><input type="file" id="impf" accept=".json" hidden></div></div>
+<div class="bar"><div id="st"></div><button class="btn grad" id="pub">&#9729; Simpan &amp; Publish</button><div class="r"><button class="btn ghost" id="dlj">&#11015; data.json</button><button class="btn ghost" id="imp">Impor</button></div><input type="file" id="impf" accept=".json" hidden></div></div>
 
+<script src="config.js"></script>
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const DEF={name:'Ogegaugaw',mA:'',mT:'',avatar:'',video:'',audio:'',tabs:[{id:'main',n:'Main'}],cards:[],soc:['#','#','#','#']};
 let S=DEF,openC=-1,dirty=false;
 async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
-async function login(){let ok=false;try{ok=(await sha($('#u').value.trim()+':'+$('#pw').value))==='d62cc750d228328b96be8814ed24212db71de2f99b5b0e8cc479a82c6b133d9f'}catch(e){$('#err').textContent='Buka lewat https:// atau localhost';return}
- if(ok){$('#login').style.display='none';$('#app').style.display='flex';sessionStorage.setItem('ok','1');await load();form();sendPv()}else $('#err').textContent='Username atau password salah'}
+const FBc=window.FB||{},DB=(FBc.databaseURL||'').replace(/\/$/,''),useFB=!!(FBc.apiKey&&DB);
+let tok=null,cred=null;
+const toEmail=u=>u.includes('@')?u:u+'@'+(FBc.adminDomain||'ogegaugaw.app');
+async function fbLogin(email,pw){const r=await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key='+FBc.apiKey,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pw,returnSecureToken:true})});const j=await r.json();if(!r.ok)throw new Error((j.error&&j.error.message)||'gagal');tok=j.idToken;cred={email,pw}}
+async function login(){const u=$('#u').value.trim(),pw=$('#pw').value;$('#err').textContent='';
+ try{if(useFB)await fbLogin(toEmail(u),pw);else if((await sha(u+':'+pw))!=='d62cc750d228328b96be8814ed24212db71de2f99b5b0e8cc479a82c6b133d9f')throw new Error('INVALID')}
+ catch(e){$('#err').textContent=/INVALID|PASSWORD|EMAIL|CREDENTIALS|USER/.test(e.message)?'Username atau password salah':'Gagal masuk: '+e.message;return}
+ $('#login').style.display='none';$('#app').style.display='flex';await load();form();sendPv()}
 $('#go').onclick=login;$('#pw').addEventListener('keydown',e=>e.key==='Enter'&&login());
-$('#out').onclick=()=>{sessionStorage.removeItem('ok');location.reload()};
+$('#out').onclick=()=>location.reload();
+const arr=x=>Array.isArray(x)?x:Object.values(x||{});
+function norm(s){s.tabs=arr(s.tabs);if(!s.tabs.length)s.tabs=[{id:'main',n:'Main'}];s.cards=arr(s.cards).map(c=>Object.assign({tab:s.tabs[0].id,t:'',s:'',u:'#',img:''},c));s.soc=arr(s.soc);while(s.soc.length<4)s.soc.push('#');return s}
 async function load(){let d=null;try{d=JSON.parse(localStorage.getItem('draft')||'null');if(d)dirty=true}catch(e){}
+ if(!d&&useFB){try{const r=await fetch(DB+'/site.json');if(r.ok)d=await r.json()}catch(e){}}
  if(!d){try{const r=await fetch('data.json?'+Date.now());if(r.ok)d=await r.json()}catch(e){}}
- S=Object.assign({},DEF,d||{});st()}
-function st(){$('#st').textContent=dirty?'● Ada perubahan belum di-upload. Download data.json lalu timpa file di hosting.':'Data sama dengan yang di hosting.'}
+ S=norm(Object.assign({},DEF,d||{}));st()}
+function st(){$('#st').textContent=dirty?'● Ada perubahan yang belum dipublish.':(useFB?'Terhubung ke Firebase.':'Mode lokal: isi config.js untuk Firebase.')}
 let pt;function sendPv(){clearTimeout(pt);pt=setTimeout(()=>{try{$('#pf').contentWindow.postMessage({type:'preview',data:S},'*')}catch(e){}},120)}
 $('#pf').addEventListener('load',()=>{sendPv();setTimeout(sendPv,600)});
 function changed(){dirty=true;try{localStorage.setItem('draft',JSON.stringify(S))}catch(e){}st();sendPv()}
@@ -98,8 +108,14 @@ $('#fm').addEventListener('click',e=>{const t=e.target;
 $('#fm').addEventListener('change',e=>{const k=e.target.dataset.up,f=e.target.files&&e.target.files[0];if(!k||!f)return;
  const i=new Image();i.onload=()=>{const m=k==='avatar'?300:600,r=Math.min(1,m/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*r);c.height=Math.round(i.height*r);c.getContext('2d').drawImage(i,0,0,c.width,c.height);
   const d=c.toDataURL('image/jpeg',.82);if(k==='avatar')S.avatar=d;else S.cards[+k.slice(4)].img=d;changed();form()};i.src=URL.createObjectURL(f)});
-$('#dlj').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:'application/json'}));a.download='data.json';a.click();$('#st').textContent='✓ data.json terunduh. Upload & timpa file data.json di hosting kamu.'};
+$('#dlj').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:'application/json'}));a.download='data.json';a.click();$('#st').textContent='✓ Cadangan data.json terunduh.'};
 $('#imp').onclick=()=>$('#impf').click();
 $('#impf').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{S=Object.assign({},DEF,JSON.parse(await f.text()));changed();form()}catch(x){$('#st').textContent='File JSON tidak valid'}};
-if(sessionStorage.getItem('ok')){$('#login').style.display='none';$('#app').style.display='flex';load().then(()=>{form();sendPv()})}
+const put=()=>fetch(DB+'/site.json?auth='+tok,{method:'PUT',body:JSON.stringify(S)});
+$('#pub').onclick=async()=>{if(!useFB){$('#st').textContent='Firebase belum diisi di config.js (lihat panduan).';return}
+ $('#st').textContent='Menyimpan...';
+ try{let r=await put();if(r.status===401){await fbLogin(cred.email,cred.pw);r=await put()}
+  if(r.ok){dirty=false;try{localStorage.removeItem('draft')}catch(e){}$('#st').textContent='✓ Terpublish. Semua orang langsung melihatnya.'}
+  else{const t=await r.text();$('#st').textContent='Gagal ('+r.status+'): '+(r.status===401||r.status===403?'cek Rules & akun admin di Firebase.':t.slice(0,80))}}
+ catch(e){$('#st').textContent='Gagal: '+e.message}};
 </script></body></html>
