@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin</title>
+<style>
+:root{--bg:#0e0b1c;--card:#191531;--card2:#211c40;--line:#2f2958;--tx:#f4f2ff;--mu:#9b96bd;--ac:#8b5cf6;--ac2:#ec4899}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;min-height:100dvh}
+button{font:inherit;cursor:pointer}
+.grad{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border:0}
+#login{min-height:100dvh;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 20% 10%,#3b1d7a55,transparent 50%),radial-gradient(circle at 80% 90%,#ec489944,transparent 50%)}
+.lc{width:100%;max-width:360px;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:28px 22px;box-shadow:0 20px 60px #0008}
+.lc .lg{width:60px;height:60px;border-radius:18px;margin:0 auto 14px;display:grid;place-items:center;font-size:28px}
+.lc h1{text-align:center;margin:0;font-size:22px}.lc p{text-align:center;color:var(--mu);font-size:13px;margin:4px 0 14px}
+label{display:block;font-size:12px;color:var(--mu);margin:12px 0 5px}
+input[type=text],input[type=password],select{width:100%;padding:12px 13px;border-radius:12px;border:1px solid var(--line);background:#120f26;color:var(--tx);font-size:15px;outline:0}
+input:focus,select:focus{border-color:var(--ac)}
+.btn{width:100%;padding:13px;border-radius:12px;font-weight:700;margin-top:14px;font-size:15px}
+.btn.ghost{background:var(--card2);color:var(--tx);border:1px solid var(--line)}
+#err{color:#ff7b8a;font-size:13px;min-height:18px;text-align:center;margin-top:10px}
+#app{display:none;height:100dvh;flex-direction:column}
+header{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--card);border-bottom:1px solid var(--line)}
+header b{flex:1;font-size:16px}
+.seg{display:flex;background:#120f26;border-radius:10px;padding:3px}
+.seg button{border:0;background:none;color:var(--mu);padding:7px 12px;border-radius:8px;font-weight:600;font-size:13px}
+.seg button.on{background:var(--card2);color:#fff}
+.ib{background:var(--card2);border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:8px 11px;font-size:13px;font-weight:600}
+.wrap{flex:1;display:grid;grid-template-columns:1fr;min-height:0}
+.ed{overflow:auto;padding:14px;padding-bottom:140px}
+.pv{display:none;background:#05040c;align-items:center;justify-content:center;padding:12px;min-height:0}
+#app.sp .ed{display:none}#app.sp .pv{display:flex}
+.fr{width:100%;max-width:390px;height:100%;border:6px solid #2a2450;border-radius:28px;background:#000;overflow:hidden}
+.fr iframe{width:100%;height:100%;border:0;background:#111}
+@media(min-width:900px){.wrap{grid-template-columns:minmax(380px,520px) 1fr}.seg{display:none}#app.sp .ed{display:block}.pv{display:flex}}
+details.sec{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:12px}
+details>summary{list-style:none;padding:15px 16px;font-weight:700;display:flex;align-items:center;gap:10px;cursor:pointer}
+details>summary::-webkit-details-marker{display:none}
+details>summary::after{content:"\25BE";margin-left:auto;color:var(--mu);transition:.2s}
+details[open]>summary::after{transform:rotate(180deg)}
+.in{padding:0 16px 16px}
+details.cd{background:var(--card2);border-radius:12px;margin-top:10px;border:1px solid var(--line)}
+details.cd>summary{padding:12px;font-size:14px}details.cd>summary small{color:var(--mu);font-weight:400}
+.row{display:flex;gap:8px;margin-top:8px}.row input{flex:1}
+.dl{background:#3a1626;color:#ff8da0;border:1px solid #5b2237;border-radius:10px;padding:9px 12px;font-weight:600}
+.add{background:none;border:1px dashed var(--line);color:var(--ac);border-radius:12px;padding:12px;width:100%;margin-top:12px;font-weight:700}
+input[type=file]{width:100%;padding:10px;border:1px dashed var(--line);border-radius:12px;background:#120f26;color:var(--mu);font-size:13px}
+input[type=file]::file-selector-button{background:var(--ac);color:#fff;border:0;border-radius:8px;padding:7px 11px;margin-right:10px;font-weight:700}
+.th{width:60px;height:60px;border-radius:10px;object-fit:cover;margin-top:8px;display:block}
+.hint{font-size:12px;color:var(--mu);margin-top:6px;line-height:1.4}
+.bar{position:fixed;left:0;right:0;bottom:0;padding:12px 14px calc(12px + env(safe-area-inset-bottom,0px));background:linear-gradient(transparent,var(--bg) 25%);display:flex;flex-direction:column;gap:8px;z-index:5}
+@media(min-width:900px){.bar{right:auto;width:min(520px,45vw)}}
+.bar .r{display:flex;gap:8px}.bar .r>*{flex:1}
+#st{font-size:12px;color:var(--mu);text-align:center}
+.bar .btn{margin:0}
+</style></head><body>
+<div id="login"><div class="lc"><div class="lg grad">&#128272;</div><h1>Admin Login</h1><p>Masuk untuk mengelola halaman</p>
+<label>Username</label><input type="text" id="u" autocomplete="username" autocapitalize="off"><label>Password</label><input type="password" id="pw" autocomplete="current-password">
+<div id="err"></div><button class="btn grad" id="go">Masuk</button></div></div>
+
+<div id="app"><header><b>&#9881; Admin</b><div class="seg"><button class="on" data-v="ed">Editor</button><button data-v="pv">Preview</button></div><button class="ib" id="out">Keluar</button></header>
+<div class="wrap"><div class="ed" id="fm"></div><div class="pv"><div class="fr"><iframe id="pf" src="index.html" title="preview"></iframe></div></div></div>
+<div class="bar"><div id="st"></div><div class="r"><button class="btn grad" id="dlj">&#11015; Download data.json</button><button class="btn ghost" id="imp">Impor</button></div><input type="file" id="impf" accept=".json" hidden></div></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const DEF={name:'Ogegaugaw',mA:'',mT:'',avatar:'',video:'',audio:'',tabs:[{id:'main',n:'Main'}],cards:[],soc:['#','#','#','#']};
+let S=DEF,openC=-1,dirty=false;
+async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+async function login(){let ok=false;try{ok=(await sha($('#u').value.trim()+':'+$('#pw').value))==='d62cc750d228328b96be8814ed24212db71de2f99b5b0e8cc479a82c6b133d9f'}catch(e){$('#err').textContent='Buka lewat https:// atau localhost';return}
+ if(ok){$('#login').style.display='none';$('#app').style.display='flex';sessionStorage.setItem('ok','1');await load();form();sendPv()}else $('#err').textContent='Username atau password salah'}
+$('#go').onclick=login;$('#pw').addEventListener('keydown',e=>e.key==='Enter'&&login());
+$('#out').onclick=()=>{sessionStorage.removeItem('ok');location.reload()};
+async function load(){let d=null;try{d=JSON.parse(localStorage.getItem('draft')||'null');if(d)dirty=true}catch(e){}
+ if(!d){try{const r=await fetch('data.json?'+Date.now());if(r.ok)d=await r.json()}catch(e){}}
+ S=Object.assign({},DEF,d||{});st()}
+function st(){$('#st').textContent=dirty?'● Ada perubahan belum di-upload. Download data.json lalu timpa file di hosting.':'Data sama dengan yang di hosting.'}
+let pt;function sendPv(){clearTimeout(pt);pt=setTimeout(()=>{try{$('#pf').contentWindow.postMessage({type:'preview',data:S},'*')}catch(e){}},120)}
+$('#pf').addEventListener('load',()=>{sendPv();setTimeout(sendPv,600)});
+function changed(){dirty=true;try{localStorage.setItem('draft',JSON.stringify(S))}catch(e){}st();sendPv()}
+$$('.seg button').forEach(b=>b.onclick=()=>{$$('.seg button').forEach(x=>x.classList.toggle('on',x===b));$('#app').classList.toggle('sp',b.dataset.v==='pv');sendPv()});
+const tn=id=>(S.tabs.find(t=>t.id===id)||{}).n||'';
+const thumb=v=>v&&/^(data:|https?:|\/|[\w.-]+\.(png|jpe?g|webp|gif))/i.test(v)?'<img class="th" src="'+esc(v)+'" alt="">':(v?'<div class="hint">Gambar bawaan halaman</div>':'');
+function form(){
+ const I=(p,l,v,h)=>'<label>'+l+'</label><input type="text" data-p="'+p+'" value="'+esc(v)+'">'+(h?'<div class="hint">'+h+'</div>':''),
+ F=(k,l)=>'<label>'+l+'</label><input type="file" accept="image/*" data-up="'+k+'">',
+ sec=(t,b,o)=>'<details class="sec"'+(o?' open':'')+'><summary>'+t+'</summary><div class="in">'+b+'</div></details>';
+ let f=sec('&#128100; Profil',I('name','Nama',S.name)+F('avatar','Foto profil')+thumb(S.avatar),1);
+ f+=sec('&#127925; Musik &amp; Video',I('mA','Artis',S.mA)+I('mT','Judul lagu',S.mT)+I('audio','File musik',S.audio,'Isi nama file, mis. <b>musik.mp3</b>. Upload file itu ke hosting, satu folder dengan index.html.')+I('video','File video latar',S.video,'Mis. <b>video.mp4</b> (upload ke folder yang sama).'));
+ f+=sec('&#128193; Kategori',S.tabs.map((t,i)=>'<div class="row"><input type="text" data-p="tabs.'+i+'.n" value="'+esc(t.n)+'">'+(i?'<button class="dl" data-del="t'+i+'">Hapus</button>':'')+'</div>').join('')+'<div class="row"><input type="text" id="nt" placeholder="Nama kategori baru"><button class="dl" style="background:var(--ac);color:#fff;border:0" id="at">Tambah</button></div>');
+ f+=sec('&#128279; Kartu link ('+S.cards.length+')',S.cards.map((c,i)=>'<details class="cd"'+(i===openC?' open':'')+'><summary>'+esc(c.t||'(tanpa judul)')+' <small>'+esc(tn(c.tab))+'</small></summary><div class="in"><label>Kategori</label><select data-p="cards.'+i+'.tab">'+S.tabs.map(t=>'<option value="'+esc(t.id)+'"'+(t.id===c.tab?' selected':'')+'>'+esc(t.n)+'</option>').join('')+'</select>'+I('cards.'+i+'.t','Judul',c.t)+I('cards.'+i+'.s','Deskripsi',c.s)+I('cards.'+i+'.u','Link',c.u)+F('card'+i,'Gambar')+thumb(c.img)+'<button class="dl" style="margin-top:12px" data-del="c'+i+'">Hapus kartu</button></div></details>').join('')+'<button class="add" id="ac">+ Tambah kartu</button>',1);
+ f+=sec('&#127760; Sosial media',['TikTok','Instagram','Facebook','Discord'].map((n,i)=>I('soc.'+i,n,S.soc[i]||'#')).join(''));
+ const op=$$('#fm details.sec').map(d=>d.open);$('#fm').innerHTML=f;if(form.k)$$('#fm details.sec').forEach((d,i)=>d.open=op[i]);form.k=1}
+function setp(p,v){const a=p.split('.');let o=S;for(let i=0;i<a.length-1;i++)o=o[a[i]];o[a[a.length-1]]=v}
+$('#fm').addEventListener('input',e=>{const p=e.target.dataset.p;if(p){setp(p,e.target.value);changed()}});
+$('#fm').addEventListener('click',e=>{const t=e.target;
+ if(t.id==='at'){const n=$('#nt').value.trim();if(n){S.tabs.push({id:'t'+Date.now(),n});changed();form()}}
+ else if(t.id==='ac'){S.cards.push({tab:S.tabs[0].id,t:'Judul baru',s:'Deskripsi',u:'#',img:''});openC=S.cards.length-1;changed();form()}
+ else if(t.dataset.del){const k=t.dataset.del,i=+k.slice(1);if(k[0]==='t'){const id=S.tabs[i].id;S.tabs.splice(i,1);S.cards=S.cards.filter(c=>c.tab!==id)}else S.cards.splice(i,1);openC=-1;changed();form()}});
+$('#fm').addEventListener('change',e=>{const k=e.target.dataset.up,f=e.target.files&&e.target.files[0];if(!k||!f)return;
+ const i=new Image();i.onload=()=>{const m=k==='avatar'?300:600,r=Math.min(1,m/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*r);c.height=Math.round(i.height*r);c.getContext('2d').drawImage(i,0,0,c.width,c.height);
+  const d=c.toDataURL('image/jpeg',.82);if(k==='avatar')S.avatar=d;else S.cards[+k.slice(4)].img=d;changed();form()};i.src=URL.createObjectURL(f)});
+$('#dlj').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:'application/json'}));a.download='data.json';a.click();$('#st').textContent='✓ data.json terunduh. Upload & timpa file data.json di hosting kamu.'};
+$('#imp').onclick=()=>$('#impf').click();
+$('#impf').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{S=Object.assign({},DEF,JSON.parse(await f.text()));changed();form()}catch(x){$('#st').textContent='File JSON tidak valid'}};
+if(sessionStorage.getItem('ok')){$('#login').style.display='none';$('#app').style.display='flex';load().then(()=>{form();sendPv()})}
+</script></body></html>

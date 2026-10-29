@@ -1,0 +1,47 @@
+{
+ "name": "Ogegaugaw",
+ "mA": "Khánh Nma",
+ "mT": "Ký Ức Thuở Ban Đầu",
+ "avatar": "AV",
+ "video": "",
+ "audio": "",
+ "tabs": [
+  {
+   "id": "main",
+   "n": "Main"
+  },
+  {
+   "id": "t1793243936075",
+   "n": "ax-manager modul"
+  }
+ ],
+ "cards": [
+  {
+   "tab": "main",
+   "t": "Sever Discord",
+   "s": "Hỗ trợ+Chia sẻ+Giải thích",
+   "u": "https://discord.gg/5tHHHgN3m",
+   "img": "IMG1"
+  },
+  {
+   "tab": "t1793243936075",
+   "t": "Xtreme game booster ",
+   "s": "Modul axmanager non root modul cocok untuk semua device",
+   "u": "t.me/lizwa",
+   "img": "IMG2"
+  },
+  {
+   "tab": "main",
+   "t": "Judul baru",
+   "s": "Deskripsi",
+   "u": "#",
+   "img": ""
+  }
+ ],
+ "soc": [
+  "#",
+  "#",
+  "#",
+  "https://discord.gg/5tHHHgN3m"
+ ]
+}
