@@ -196,4 +196,10 @@ $('.ap').onclick=e=>{const b=e.target.closest('[data-a]');if(!b)return;const u=e
  if(a==='copy'){try{navigator.clipboard.writeText(shareU)}catch(x){}b.lastChild.textContent='Copied!'}
  else window.open({fb:'https://www.facebook.com/sharer/sharer.php?u='+u,in:'https://www.linkedin.com/sharing/share-offsite/?url='+u,x:'https://twitter.com/intent/tweet?url='+u,wa:'https://wa.me/?text='+u}[a],'_blank')};
 
-};</script><script>(async()=>{try{const r=await fetch('data.json?'+Date.now());if(r.ok){const d=await r.json();document.getElementById('state').textContent=JSON.stringify(d).replace(/</g,'\\u003c')}}catch(e){}window.__main()})();</script></body></html>
+};</script><script src="config.js"></script><script>(async()=>{const F=window.FB||{},DB=(F.databaseURL||'').replace(/\/$/,'');let d=null;
+const arr=x=>Array.isArray(x)?x:Object.values(x||{});
+try{if(F.apiKey&&DB){const r=await fetch(DB+'/site.json');if(r.ok)d=await r.json()}}catch(e){}
+if(!d){try{const r=await fetch('data.json?'+Date.now());if(r.ok)d=await r.json()}catch(e){}}
+if(d){d.tabs=arr(d.tabs);if(!d.tabs.length)d.tabs=[{id:'main',n:'Main'}];d.cards=arr(d.cards).map(c=>Object.assign({tab:d.tabs[0].id,t:'',s:'',u:'#',img:''},c));d.soc=arr(d.soc);while(d.soc.length<4)d.soc.push('#');
+ d=Object.assign({name:'',mA:'',mT:'',avatar:'',video:'',audio:''},d);document.getElementById('state').textContent=JSON.stringify(d).replace(/</g,'\\u003c')}
+window.__main()})();</script></body></html>
