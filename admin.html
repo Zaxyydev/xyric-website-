@@ -11,8 +11,8 @@ svg{display:block}
 .grad{background:linear-gradient(120deg,#2fc3f2,#5b8bff 50%,#9b7bff);color:#fff;border:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -2px 6px rgba(0,0,0,.18),0 10px 28px rgba(70,140,255,.32)}
 .btn{width:100%;min-height:50px;padding:13px;border-radius:16px;font-weight:800;font-size:15px;letter-spacing:.02em;display:flex;align-items:center;justify-content:center;gap:10px;transition:transform .2s cubic-bezier(.3,1.5,.5,1),filter .2s}
 .btn:active{transform:scale(.97)}.btn:hover{filter:brightness(1.08)}.btn[disabled]{opacity:.7;pointer-events:none}
-.sp{width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;animation:spin .7s linear infinite;display:none}
-.ld .sp{display:block}@keyframes spin{to{transform:rotate(360deg)}}
+.spin{width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;animation:spin .7s linear infinite;display:none}
+.ld .spin{display:block}@keyframes spin{to{transform:rotate(360deg)}}
 
 /* LOGIN */
 #login{position:relative;z-index:1;min-height:100dvh;display:grid;place-items:center;padding:22px}
@@ -125,7 +125,7 @@ details.cd[open]>summary:after{transform:rotate(225deg)}
  <div class="inp"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 4.5-5.5 8-5.5s6.5 1.5 8 5.5"/></svg><input type="text" id="u" placeholder="Username" aria-label="Username" autocomplete="username" autocapitalize="off"></div>
  <div class="inp"><svg viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="3"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg><input type="password" id="pw" placeholder="Password" aria-label="Password" autocomplete="current-password"><button class="eye" id="eye" type="button" aria-label="Tampilkan password"><svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
  <div id="err"></div>
- <button class="btn grad" id="go"><span class="sp"></span><span>Masuk</span></button>
+ <button class="btn grad" id="go"><span class="spin"></span><span>Masuk</span></button>
 </div></div>
 
 <div id="app">
@@ -135,7 +135,7 @@ details.cd[open]>summary:after{transform:rotate(225deg)}
   <button class="ib" id="out">Keluar</button>
  </header>
  <div class="wrap"><div class="ed" id="fm"></div><div class="pv"><div class="fr"><iframe id="pf" src="index.html" title="preview"></iframe></div></div></div>
- <div class="bar"><div id="st"></div><button class="btn grad" id="pub"><span class="sp"></span><span id="pl">Simpan &amp; Publish</span></button></div>
+ <div class="bar"><div id="st"></div><button class="btn grad" id="pub"><span class="spin"></span><span id="pl">Simpan &amp; Publish</span></button></div>
 </div>
 
 <script src="config.js"></script>
