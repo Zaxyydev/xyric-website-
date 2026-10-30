@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin</title>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>XYRIC — Aurora Glass Control</title>
 <style>
 :root{--bg:#0e0b1c;--card:#191531;--card2:#211c40;--line:#2f2958;--tx:#f4f2ff;--mu:#9b96bd;--ac:#8b5cf6;--ac2:#ec4899}
 *{box-sizing:border-box}
@@ -50,20 +50,67 @@ input[type=file]::file-selector-button{background:var(--ac);color:#fff;border:0;
 .bar .r{display:flex;gap:8px}.bar .r>*{flex:1}
 #st{font-size:12px;color:var(--mu);text-align:center}
 .bar .btn{margin:0}
+
+/* XYRIC Aurora Glass redesign — visual layer, existing editor logic retained */
+:root{--bg:#050914;--card:rgba(13,24,47,.66);--card2:rgba(21,36,67,.72);--line:rgba(151,190,255,.20);--tx:#f2f7ff;--mu:#9eafcc;--ac:#72d7ff;--ac2:#a58bff}
+html{background:#050914;scroll-behavior:smooth}
+body{background:radial-gradient(ellipse at 12% 8%,rgba(39,123,255,.22),transparent 38%),radial-gradient(ellipse at 88% 26%,rgba(147,79,255,.19),transparent 36%),radial-gradient(ellipse at 52% 100%,rgba(0,219,201,.11),transparent 42%),#050914;background-attachment:fixed;letter-spacing:.01em}
+body:before{content:"";position:fixed;inset:-25%;pointer-events:none;z-index:0;background:conic-gradient(from 160deg at 50% 50%,transparent 0 20%,rgba(67,153,255,.055) 28%,transparent 38%,rgba(159,103,255,.06) 53%,transparent 68%);filter:blur(45px);animation:auroraDrift 24s ease-in-out infinite alternate}
+@keyframes auroraDrift{from{transform:translate3d(-2%,1%,0) rotate(-5deg)}to{transform:translate3d(2%,-1%,0) rotate(7deg)}}
+button,input,select,details,header,.bar,.lc,.fr{position:relative}
+#login{position:relative;z-index:1;background:transparent}
+.lc{background:linear-gradient(145deg,rgba(22,39,72,.78),rgba(10,17,34,.74));border:1px solid rgba(185,218,255,.28);backdrop-filter:blur(28px) saturate(150%);-webkit-backdrop-filter:blur(28px) saturate(150%);box-shadow:0 28px 90px #0008,inset 0 1px 0 rgba(255,255,255,.13);overflow:hidden}
+.lc:before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,transparent,#76e4ff,#ad8aff,transparent);opacity:.9}
+.lc .lg{background:linear-gradient(135deg,rgba(88,213,255,.25),rgba(151,112,255,.35));border:1px solid rgba(191,232,255,.3);box-shadow:0 0 32px #59bfff24,inset 0 1px 0 #ffffff33}
+.lc h1{letter-spacing:-.04em;font-size:25px}.lc p{line-height:1.6}
+#app{position:relative;z-index:1;background:transparent}
+header{background:rgba(7,14,29,.70);border-bottom:1px solid rgba(163,199,255,.18);backdrop-filter:blur(26px) saturate(160%);-webkit-backdrop-filter:blur(26px) saturate(160%);padding:13px 16px;box-shadow:0 8px 30px #0002}
+header:after{content:"";position:absolute;left:16px;right:16px;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,#75dfff88,#a78bfa88,transparent)}
+header b{font-size:17px;letter-spacing:-.025em}header b:before{content:"✦";display:inline-grid;place-items:center;width:30px;height:30px;margin-right:9px;border-radius:10px;color:#b8f2ff;background:linear-gradient(135deg,#53cfff30,#a68bff35);border:1px solid #a9dfff38}
+.seg{background:rgba(5,12,26,.65);border:1px solid var(--line);border-radius:13px;padding:4px}.seg button{border-radius:10px}.seg button.on{background:linear-gradient(135deg,rgba(78,201,255,.25),rgba(151,119,255,.28));box-shadow:inset 0 0 0 1px #b4eaff32;color:#fff}
+.ib{background:rgba(255,255,255,.045);border:1px solid rgba(181,211,255,.23);backdrop-filter:blur(12px);transition:transform .18s,border-color .18s,background .18s}.ib:hover{border-color:#8ee6ff88;background:#75dfff13;transform:translateY(-1px)}
+.grad{background:linear-gradient(110deg,#36bfe9,#6c8bff 48%,#a57bff);box-shadow:0 8px 26px rgba(70,154,255,.22),inset 0 1px 0 #ffffff48;transition:transform .18s,filter .18s,box-shadow .18s}.grad:hover{filter:brightness(1.09);transform:translateY(-1px);box-shadow:0 12px 32px rgba(70,154,255,.3),inset 0 1px 0 #ffffff55}.grad:active{transform:scale(.985)}
+.ed{padding:18px 16px 170px;scrollbar-width:thin;scrollbar-color:#5c80b766 transparent}
+.ed:before{content:"CONTROL CENTER";display:block;font-size:10px;letter-spacing:.22em;font-weight:800;color:#8ddfff;margin:2px 3px 7px;text-shadow:0 0 18px #65cfff55}
+.ed:after{content:"Kelola konten, tampilan, dan media XYRIC dari satu tempat.";display:block;font-size:12px;color:var(--mu);margin:0 3px 17px}
+details.sec{background:linear-gradient(145deg,rgba(20,36,66,.74),rgba(9,17,34,.66));border:1px solid rgba(157,197,255,.19);border-radius:18px;margin-bottom:13px;overflow:hidden;box-shadow:0 10px 28px #00000018,inset 0 1px 0 rgba(255,255,255,.045);backdrop-filter:blur(20px) saturate(135%);-webkit-backdrop-filter:blur(20px) saturate(135%);transition:border-color .2s,transform .2s,box-shadow .2s}
+details.sec[open]{border-color:rgba(112,218,255,.38);box-shadow:0 14px 34px #0002,0 0 0 1px #6edcff0b,inset 0 1px 0 #ffffff0a}
+details>summary{padding:16px 16px;min-height:54px;font-size:14px;letter-spacing:.005em}details>summary:before{content:"";width:4px;height:22px;border-radius:8px;background:linear-gradient(#67ddff,#9c8aff);box-shadow:0 0 14px #67ddff55;margin-right:1px}details>summary::after{content:"＋";font-size:17px;color:#9ddfff;transform:none}details[open]>summary::after{content:"−";transform:none}
+.in{padding:0 16px 17px}
+label{color:#b5c9e8;font-size:11px;font-weight:700;letter-spacing:.045em;text-transform:uppercase;margin:15px 0 7px}
+input[type=text],input[type=password],select{background:rgba(3,10,23,.58);border:1px solid rgba(154,190,239,.20);border-radius:12px;color:#f2f7ff;padding:12px 13px;box-shadow:inset 0 1px 5px #0002;transition:border-color .2s,box-shadow .2s,background .2s}
+input[type=text]:focus,input[type=password]:focus,select:focus{border-color:#71dfff;box-shadow:0 0 0 3px #5fd5ff17,0 0 20px #5fd5ff0d;background:rgba(6,17,34,.86)}
+input::placeholder{color:#6e83a5}
+input[type=file]{background:rgba(3,10,23,.38);border:1px dashed rgba(122,207,255,.35);border-radius:13px;color:#a8bbd9}input[type=file]::file-selector-button{background:linear-gradient(120deg,#31bce8,#777eff);border-radius:9px;box-shadow:0 4px 14px #49bfff24}
+.th{width:84px;height:84px;border-radius:15px;border:1px solid #b3e6ff38;box-shadow:0 8px 24px #0004;object-fit:cover}
+.hint{color:#91a7c8;line-height:1.55}
+details.cd{background:rgba(6,14,29,.53);border:1px solid rgba(145,188,239,.15);border-radius:14px;overflow:hidden}details.cd[open]{border-color:#70dfff50}details.cd>summary{font-size:13px}details.cd>summary:before{display:none}details.cd>summary::after{font-size:14px}
+.row{align-items:center}.row input{min-width:0}.dl{background:rgba(255,101,133,.09);border-color:rgba(255,120,153,.24);transition:background .18s}.dl:hover{background:rgba(255,101,133,.17)}
+.add{border:1px dashed rgba(115,219,255,.38);background:rgba(68,192,255,.055);color:#8fe7ff;border-radius:13px;transition:background .2s,border-color .2s}.add:hover{background:rgba(68,192,255,.12);border-color:#8fe7ff}
+.bar{background:linear-gradient(180deg,transparent,rgba(4,9,20,.78) 18%,rgba(4,9,20,.96));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(149,190,255,.13);padding-top:17px}.bar .btn{min-height:44px;border-radius:13px}.bar .ghost{background:rgba(255,255,255,.045);border:1px solid rgba(161,195,245,.19);color:#dce9ff}.bar .ghost:hover{background:#79dfff12;border-color:#79dfff66}#st{line-height:1.45;padding:0 6px}
+.pv{background:radial-gradient(ellipse at 50% 0%,#163a63,transparent 55%),#040814}.fr{border-color:rgba(155,210,255,.28);box-shadow:0 25px 80px #0009,0 0 40px #6bcfff13}
+@media(min-width:900px){.ed{padding:24px 22px 150px}.ed:before,.ed:after{max-width:650px}.bar{width:min(520px,45vw);padding-left:22px;padding-right:22px}}
+@media(max-width:480px){header{padding:11px 12px}header b{font-size:15px}.ed{padding:14px 11px 172px}details>summary{padding:14px 13px}.in{padding-left:13px;padding-right:13px}.bar{padding-left:11px;padding-right:11px}.bar .r{gap:7px}.bar .btn{font-size:13px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+.cnt{min-width:30px;text-align:center;font-size:12px;font-weight:800;color:#bfeeff;background:rgba(114,215,255,.12);border:1px solid rgba(114,215,255,.28);border-radius:999px;padding:6px 8px}
+.mv{background:rgba(255,255,255,.06);border:1px solid rgba(181,211,255,.23);color:#cfe6ff;border-radius:10px;padding:9px 10px;font-size:11px;line-height:1}
+.mv:hover{background:#79dfff1f;border-color:#79dfff77}
+.bar .r{flex-wrap:wrap}.bar .r>*{min-width:90px}
 </style></head><body>
 <div id="login"><div class="lc"><div class="lg grad">&#128272;</div><h1>Admin Login</h1><p>Masuk untuk mengelola halaman</p>
 <label>Username</label><input type="text" id="u" autocomplete="username" autocapitalize="off"><label>Password</label><input type="password" id="pw" autocomplete="current-password">
 <div id="err"></div><button class="btn grad" id="go">Masuk</button></div></div>
 
-<div id="app"><header><b>&#9881; Admin</b><div class="seg"><button class="on" data-v="ed">Editor</button><button data-v="pv">Preview</button></div><button class="ib" id="out">Keluar</button></header>
+<div id="app"><header><b>XYRIC <span style="font-size:11px;color:#8edfff;font-weight:700;letter-spacing:.13em">AURORA CONTROL</span></b><div class="seg"><button class="on" data-v="ed">Editor</button><button data-v="pv">Preview</button></div><button class="ib" id="out">Keluar</button></header>
 <div class="wrap"><div class="ed" id="fm"></div><div class="pv"><div class="fr"><iframe id="pf" src="index.html" title="preview"></iframe></div></div></div>
-<div class="bar"><div id="st"></div><button class="btn grad" id="pub">&#9729; Simpan &amp; Publish</button><div class="r"><button class="btn ghost" id="dlj">&#11015; data.json</button><button class="btn ghost" id="imp">Impor</button></div><input type="file" id="impf" accept=".json" hidden></div></div>
+<div class="bar"><div id="st"></div><button class="btn grad" id="pub">&#9729; Simpan &amp; Publish</button><div class="r"><button class="btn ghost" id="dlj">&#11015; data.json</button><button class="btn ghost" id="imp">Impor</button><button class="btn ghost" id="rl">&#8635; Server</button></div><input type="file" id="impf" accept=".json" hidden></div></div>
 
 <script src="config.js"></script>
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const DEF={name:'Ogegaugaw',mA:'',mT:'',avatar:'',musicCover:'',backgroundImage:'',backgroundType:'video',video:'',audio:'',tabs:[{id:'main',n:'Main'},{id:'ax-manager',n:'AXManager Modul'},{id:'preset-am',n:'Preset AM'}],cards:[],soc:['#','#','#','#']};
+const DEF={name:'Ogegaugaw',mA:'',mT:'',avatar:'',musicCover:'',backgroundImage:'',backgroundType:'video',video:'',audio:'',tabs:[{id:'main',n:'Main'}],cards:[],soc:['#','#','#','#']};
 let S=DEF,openC=-1,dirty=false;
 async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
 const FBc=window.FB||{},DB=(FBc.databaseURL||'').replace(/\/$/,''),useFB=!!(FBc.apiKey&&DB);
@@ -77,12 +124,13 @@ async function login(){const u=$('#u').value.trim(),pw=$('#pw').value;$('#err').
 $('#go').onclick=login;$('#pw').addEventListener('keydown',e=>e.key==='Enter'&&login());
 $('#out').onclick=()=>location.reload();
 const arr=x=>Array.isArray(x)?x:Object.values(x||{});
-function norm(s){s.tabs=arr(s.tabs);if(!s.tabs.length)s.tabs=[{id:'main',n:'Main'}];if(!s.tabs.some(t=>String(t.n).toLowerCase()==='main'))s.tabs.unshift({id:'main',n:'Main'});if(!s.tabs.some(t=>String(t.n).toLowerCase()==='axmanager modul'))s.tabs.push({id:'ax-manager',n:'AXManager Modul'});if(!s.tabs.some(t=>String(t.n).toLowerCase()==='preset am'))s.tabs.push({id:'preset-am',n:'Preset AM'});s.cards=arr(s.cards).map(c=>Object.assign({tab:s.tabs[0].id,t:'',s:'',u:'#',img:''},c));s.soc=arr(s.soc);while(s.soc.length<4)s.soc.push('#');return s}
+function norm(s){s.tabs=arr(s.tabs).filter(x=>x&&x.id!=null);const seen=new Set();s.tabs=s.tabs.filter(x=>!seen.has(x.id)&&seen.add(x.id));if(!s.tabs.length)s.tabs=[{id:'main',n:'Main'}];const ids=new Set(s.tabs.map(x=>x.id)),first=s.tabs[0].id;s.cards=arr(s.cards).map(c=>Object.assign({tab:first,t:'',s:'',u:'#',img:''},c)).filter(c=>ids.has(c.tab));s.soc=arr(s.soc);while(s.soc.length<4)s.soc.push('#');return s}
 async function load(){let d=null;try{d=JSON.parse(localStorage.getItem('draft')||'null');if(d)dirty=true}catch(e){}
- if(!d&&useFB){try{const r=await fetch(DB+'/site.json');if(r.ok)d=await r.json()}catch(e){}}
- if(!d){try{const r=await fetch('data.json?'+Date.now());if(r.ok)d=await r.json()}catch(e){}}
+ if(!d&&useFB){try{const r=await fetch(DB+'/site.json',{cache:'no-store'});if(r.ok)d=await r.json()}catch(e){}}
+ if(!d){try{const r=await fetch('data.json?'+Date.now(),{cache:'no-store'});if(r.ok)d=await r.json()}catch(e){}}
  if(d&&d.music){d.mT=d.music.title??d.mT;d.mA=d.music.artist??d.mA;d.musicCover=d.music.cover??d.musicCover;d.audio=d.music.audio??d.audio}if(d&&d.background){d.video=d.background.type==='video'?(d.background.src||d.video):d.video;d.backgroundImage=d.background.type==='image'?(d.background.src||''):d.backgroundImage;d.backgroundType=d.background.type||d.backgroundType}S=norm(Object.assign({},DEF,d||{}));st()}
-function st(){$('#st').textContent=dirty?'● Ada perubahan yang belum dipublish.':(useFB?'Terhubung ke Firebase.':'Mode lokal: isi config.js untuk Firebase.')}
+async function reloadServer(){if(dirty&&!confirm('Buang perubahan yang belum dipublish dan muat ulang dari server?'))return;try{localStorage.removeItem('draft')}catch(e){}dirty=false;await load();dirty=false;st();form();sendPv();$('#st').textContent='↻ Data dimuat ulang dari server.'}
+function st(){$('#st').textContent=dirty?'● Ada perubahan yang belum dipublish (draft lokal).':(useFB?'Terhubung ke Firebase.':'Mode lokal: isi config.js untuk Firebase.')}
 let pt;function sendPv(){clearTimeout(pt);pt=setTimeout(()=>{try{$('#pf').contentWindow.postMessage({type:'preview',data:S},'*')}catch(e){}},120)}
 $('#pf').addEventListener('load',()=>{sendPv();setTimeout(sendPv,600)});
 function changed(){dirty=true;try{localStorage.setItem('draft',JSON.stringify(S))}catch(e){}st();sendPv()}
@@ -96,22 +144,25 @@ function form(){
  let f=sec('&#128100; Profil',I('name','Nama',S.name)+F('avatar','Foto profil')+thumb(S.avatar),1);
  f+=sec('&#127925; Musik',I('mA','Artis',S.mA)+I('mT','Judul lagu',S.mT)+F('musicCover','Foto cover musik')+thumb(S.musicCover)+I('audio','URL / nama file MP3',S.audio,'Isi URL MP3 publik atau nama file MP3 yang sudah ada di hosting. API key tidak diperlukan untuk file MP3 publik.' )+'<div class="hint">Catatan: browser biasanya memerlukan sentuhan pertama pengguna sebelum musik boleh diputar otomatis.</div>');
  f+=sec('&#127911; Background / Latar',I('video','URL / nama file video latar',S.video,'Contoh: video.mp4 di folder website.')+F('backgroundImage','Pilih gambar latar')+thumb(S.backgroundImage)+I('backgroundType','Tipe latar (video / image / gradient)',S.backgroundType||'video','Pilih video, image, atau gradient. Gambar yang dipilih disimpan sebagai data URL di data.json/Firebase.')); 
- f+=sec('&#128193; Kategori',S.tabs.map((t,i)=>'<div class="row"><input type="text" data-p="tabs.'+i+'.n" value="'+esc(t.n)+'">'+(i?'<button class="dl" data-del="t'+i+'">Hapus</button>':'')+'</div>').join('')+'<div class="row"><input type="text" id="nt" placeholder="Nama kategori baru"><button class="dl" style="background:var(--ac);color:#fff;border:0" id="at">Tambah</button></div>');
+ const cn=id=>S.cards.filter(c=>c.tab===id).length;
+ f+=sec('&#128193; Kategori ('+S.tabs.length+')','<div class="hint" style="margin-top:0">Kategori pertama = <b>Main</b>, otomatis menampilkan semua produk dari semua kategori. Kategori lain hanya menampilkan produknya sendiri.</div>'+S.tabs.map((t,i)=>'<div class="row"><input type="text" data-p="tabs.'+i+'.n" value="'+esc(t.n)+'"><span class="cnt" title="jumlah produk">'+(i?cn(t.id):S.cards.length)+'</span>'+(i>1?'<button class="mv" data-mv="u'+i+'" aria-label="Naik">&#9650;</button>':'')+(i&&i<S.tabs.length-1?'<button class="mv" data-mv="d'+i+'" aria-label="Turun">&#9660;</button>':'')+(i?'<button class="dl" data-del="t'+i+'">Hapus</button>':'')+'</div>').join('')+'<div class="row"><input type="text" id="nt" placeholder="Nama kategori baru"><button class="dl" style="background:var(--ac);color:#08111f;border:0" id="at">Tambah</button></div>');
  f+=sec('&#128279; Kartu link ('+S.cards.length+')',S.cards.map((c,i)=>'<details class="cd"'+(i===openC?' open':'')+'><summary>'+esc(c.t||'(tanpa judul)')+' <small>'+esc(tn(c.tab))+'</small></summary><div class="in"><label>Kategori</label><select data-p="cards.'+i+'.tab">'+S.tabs.map(t=>'<option value="'+esc(t.id)+'"'+(t.id===c.tab?' selected':'')+'>'+esc(t.n)+'</option>').join('')+'</select>'+I('cards.'+i+'.t','Judul',c.t)+I('cards.'+i+'.s','Deskripsi',c.s)+I('cards.'+i+'.u','Link',c.u)+F('card'+i,'Gambar')+thumb(c.img)+'<button class="dl" style="margin-top:12px" data-del="c'+i+'">Hapus kartu</button></div></details>').join('')+'<button class="add" id="ac">+ Tambah kartu</button>',1);
  f+=sec('&#127760; Sosial media',['TikTok','Instagram','Facebook','Discord'].map((n,i)=>I('soc.'+i,n,S.soc[i]||'#')).join(''));
  const op=$$('#fm details.sec').map(d=>d.open);$('#fm').innerHTML=f;if(form.k)$$('#fm details.sec').forEach((d,i)=>d.open=op[i]);form.k=1}
 function setp(p,v){const a=p.split('.');let o=S;for(let i=0;i<a.length-1;i++)o=o[a[i]];o[a[a.length-1]]=v}
 $('#fm').addEventListener('input',e=>{const p=e.target.dataset.p;if(p){setp(p,e.target.value);changed()}});
 $('#fm').addEventListener('click',e=>{const t=e.target;
- if(t.id==='at'){const n=$('#nt').value.trim();if(n){S.tabs.push({id:'t'+Date.now(),n});changed();form()}}
+ if(t.id==='at'){const n=$('#nt').value.trim();if(n){if(S.tabs.some(x=>String(x.n).trim().toLowerCase()===n.toLowerCase())){$('#st').textContent='Kategori "'+n+'" sudah ada.';return}S.tabs.push({id:'t'+Date.now(),n});changed();form()}}
  else if(t.id==='ac'){S.cards.push({tab:S.tabs[0].id,t:'Judul baru',s:'Deskripsi',u:'#',img:''});openC=S.cards.length-1;changed();form()}
- else if(t.dataset.del){const k=t.dataset.del,i=+k.slice(1);if(k[0]==='t'){const id=S.tabs[i].id;S.tabs.splice(i,1);S.cards=S.cards.filter(c=>c.tab!==id)}else S.cards.splice(i,1);openC=-1;changed();form()}});
+ else if(t.dataset.mv){const k=t.dataset.mv,i=+k.slice(1),j=k[0]==='u'?i-1:i+1;if(i>0&&j>0&&j<S.tabs.length){[S.tabs[i],S.tabs[j]]=[S.tabs[j],S.tabs[i]];changed();form()}}
+ else if(t.dataset.del){const k=t.dataset.del,i=+k.slice(1);if(k[0]==='t'){const tb=S.tabs[i];if(!tb)return;const n=S.cards.filter(c=>c.tab===tb.id).length;if(!confirm('Hapus kategori "'+tb.n+'"'+(n?' beserta '+n+' kartunya':'')+'?'))return;S.tabs.splice(i,1);S.cards=S.cards.filter(c=>c.tab!==tb.id)}else{const c=S.cards[i];if(!c||!confirm('Hapus kartu "'+(c.t||'tanpa judul')+'"?'))return;S.cards.splice(i,1)}openC=-1;changed();form()}});
+$('#fm').addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='nt'){e.preventDefault();$('#at').click()}});
 $('#fm').addEventListener('change',e=>{const k=e.target.dataset.up,f=e.target.files&&e.target.files[0];if(!k||!f)return;
  const i=new Image();i.onload=()=>{const m=k==='avatar'?300:600,r=Math.min(1,m/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*r);c.height=Math.round(i.height*r);c.getContext('2d').drawImage(i,0,0,c.width,c.height);
   const d=c.toDataURL('image/jpeg',.82);if(k==='avatar')S.avatar=d;else if(k==='musicCover')S.musicCover=d;else if(k==='backgroundImage')S.backgroundImage=d;else S.cards[+k.slice(4)].img=d;changed();form()};i.src=URL.createObjectURL(f)});
 $('#dlj').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:'application/json'}));a.download='data.json';a.click();$('#st').textContent='✓ Cadangan data.json terunduh.'};
-$('#imp').onclick=()=>$('#impf').click();
-$('#impf').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{S=Object.assign({},DEF,JSON.parse(await f.text()));changed();form()}catch(x){$('#st').textContent='File JSON tidak valid'}};
+$('#imp').onclick=()=>$('#impf').click();$('#rl').onclick=reloadServer;
+$('#impf').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{S=norm(Object.assign({},DEF,JSON.parse(await f.text())));changed();form();sendPv()}catch(x){$('#st').textContent='File JSON tidak valid'}};
 const put=()=>fetch(DB+'/site.json?auth='+tok,{method:'PUT',body:JSON.stringify(S)});
 $('#pub').onclick=async()=>{if(!useFB){$('#st').textContent='Firebase belum diisi di config.js (lihat panduan).';return}
  $('#st').textContent='Menyimpan...';
